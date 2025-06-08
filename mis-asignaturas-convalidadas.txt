@@ -1,0 +1,73 @@
+PRIMER AÑO INGENIERÍA INFORMÁTICA
+Matemática discreta [X]
+Lógica [X]
+Introducción a la programación [X]
+Fundamentos de computadores [X]
+Álgebra [X]
+Fundamentos de electrónica [X]
+Cálculo [X]
+Tecnología de la programación [X]
+Estructura y tecnología de computadores [X]
+Gestión de empresas [X]
+
+SEGUNDO AÑO INGENIERÍA INFORMÁTICA
+Autómatas y lenguajes formales [X]
+Algoritmos y estructuras de datos I [X]
+Sistemas operativos [X]
+Bases de datos [X]
+Compiladores [X]
+Algoritmos y estructuras de datos II [X]
+Redes de ordenadores [X]
+Programación orientada a objetos [X]
+Estadística [X]
+
+TERCER AÑO INGENIERÍA INFORMÁTICA
+Programación declarativa []
+Construcción del software I []
+Arquitectura y servicios de red []
+Arquitectura de computadores [X]
+Inteligencia artificial I []
+Virtualización y computación en la nube []
+Construcción del software II []
+Fundamentos de seguridad []
+Programación y arquitecturas paralelas []
+Inteligencia artificial II []
+
+CUARTO AÑO INGENIERÍA INFORMÁTICA
+Gestión de proyectos []
+Prácticas externas I []
+Fundamentos de los sistemas ciberfísicos []
+Imagen digital []
+Interfaces de visualización de datos I []
+Informática industrial []
+Seguridad en servicios y sistemas I []
+Prácticas externas II []
+Trabajo fin de grado [X]
+
+CUARTO AÑO INGENIERÍA INFORMÁTICA - MENCIÓN SOFTWARE
+Calidad del software [X]
+Desarrollo web []
+Interfaces de usuario []
+Bases de datos de nueva generación []
+Software empresarial []
+
+CUARTO AÑO INGENIERÍA INFORMÁTICA - MENCIÓN COMPUTACIÓN
+Aprendizaje computacional []
+Diseño de sistemas inteligentes []
+Fundamentos de los lenguajes para la IA []
+IA para los videojuegos []
+Teoría de la computación [X]
+
+CUARTO AÑO INGENIERÍA INFORMÁTICA - MENCIÓN COMPUTADORES
+Computación en la nube avanzada []
+Metodología de la programación paralela []
+Visión artificial []
+Arquitecturas especializadas []
+Sistemas operativos avanzados [X]
+
+CUARTO AÑO INGENIERÍA INFORMÁTICA - MENCIÓN TECNOLOGíAS DE LA INFORMACIÓN
+Arquitecturas de internet []
+IoT y programación en la periferia []
+Servicios telemáticos avanzados []
+Programación de servicios en red []
+Introducción a la ciberseguridad []

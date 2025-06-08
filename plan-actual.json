@@ -76,6 +76,6 @@
 
     {"curso": 1, "basico": 60, "obligatorio": 0, "optativo": 0, "tfg": 0, "total": 60},
     {"curso": 2, "basico": 0, "obligatorio": 60, "optativo": 0, "tfg": 0, "total": 60},
-    {"curso": 3, "basico": 60, "obligatorio": 54, "optativo": 6, "tfg": 0, "total": 60},
+    {"curso": 3, "basico": 0, "obligatorio": 54, "optativo": 6, "tfg": 0, "total": 60},
     {"curso": 4, "basico": 0, "obligatorio": 36, "optativo": 12, "tfg": 12, "total": 60}
 ]

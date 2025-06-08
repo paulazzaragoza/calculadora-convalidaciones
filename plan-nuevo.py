@@ -18,20 +18,20 @@ mis_creditos_cuarto_redes = [0, 0, 0, 0]
 regex_linea_mis_asignaturas = r"(?P<asignatura>([a-zA-ZÁÉÍÓÚáéíóú]+ )*[a-zA-ZÁÉÍÓÚáéíóú]+) (?P<casilla>\[(|X)\])"
 compile_mis_asignaturas = re.compile(regex_linea_mis_asignaturas)
 
-#función para obtener los datos del plan actual
-def obtener_plan_actual(fichero): 
+#función para obtener los datos del plan antiguo
+def obtener_plan_nuevo(fichero): 
     with open(fichero, "r") as file: 
         return json.load(file)
 
 #función para obtener las asignaturas cursadas del fichero
-def obtener_mis_asignaturas_plan_actual(fichero):
+def obtener_mis_asignaturas_plan_nuevo(fichero):
     with open(fichero, "r") as file: 
         return file.readlines()
 
 #recorro el plan de estudios y guardo el desglose de creditos de cada curso en una estructura de datos
-def clasificar_creditos_plan_actual(plan_actual):
+def clasificar_creditos_plan_nuevo(plan_antiguo):
     lista = []
-    for dict in plan_actual:
+    for dict in plan_antiguo:
         if "curso" in dict:
             if(dict["curso"] == 1 or dict["curso"] == 2 or dict["curso"] == 3 or dict["curso"] == 4):
                 lista.append(dict)
@@ -47,7 +47,7 @@ def casilla_marcada(casilla):
     return isMarcada
 
 #comprueba si los créditos de las menciones solo incluyen los dedicados al tfg
-def comprobar_solo_tfg_plan_actual(software, computacion, computadores, redes):
+def comprobar_solo_tfg_plan_nuevo(software, computacion, computadores, redes):
     soloTFG = True
 
     for i in range(3, -1, -1):
@@ -62,7 +62,7 @@ def comprobar_solo_tfg_plan_actual(software, computacion, computadores, redes):
     return soloTFG
 
 #comprueba si los créditos de las menciones son igual a 0
-def comprobar_no_mencion_plan_actual(software, computacion, computadores, redes):
+def comprobar_no_mencion_plan_nuevo(software, computacion, computadores, redes):
     sinMencion = True
 
     for i in range(0, 4):
@@ -73,13 +73,12 @@ def comprobar_no_mencion_plan_actual(software, computacion, computadores, redes)
     return sinMencion
 
 #devuelve la mención con más créditos cursada
-def mencion_mas_creditos_plan_actual(software, computacion, computadores, redes):
+def mencion_mas_creditos_plan_nuevo(software, computacion, computadores, redes):
     lista_creditos = [software, computacion, computadores, redes]
     hayVarias = False
-    soloTFG = comprobar_solo_tfg_plan_actual(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)
+    soloTFG = comprobar_solo_tfg_plan_nuevo(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)
     resultado = {"mencion": None, "creditos": 0}
     contador = 0
-
     
     for creditos_mencion in lista_creditos:
         if(creditos_mencion > resultado["creditos"]):
@@ -98,7 +97,7 @@ def mencion_mas_creditos_plan_actual(software, computacion, computadores, redes)
         resultado["mencion"] = tipo_mencion[4]
         resultado["creditos"] = resultado["creditos"] + 12
 
-    if(comprobar_no_mencion_plan_actual):
+    if(comprobar_no_mencion_plan_nuevo(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)):
         resultado["mencion"] = tipo_mencion[4]
         resultado["creditos"] = resultado["creditos"]
 
@@ -108,7 +107,7 @@ def mencion_mas_creditos_plan_actual(software, computacion, computadores, redes)
     return resultado
 
 #devuelve la cantidad de créditos totales cursados
-def creditos_totales_plan_actual():
+def creditos_totales_plan_nuevo():
     total_software = 0
     total_computacion = 0
     total_computadores = 0
@@ -126,10 +125,10 @@ def creditos_totales_plan_actual():
     for i in range(0, 4):
         total_redes = total_redes + mis_creditos_primero[i] + mis_creditos_segundo[i] + mis_creditos_tercero[i] + mis_creditos_cuarto_redes[i]
 
-    return mencion_mas_creditos_plan_actual(total_software, total_computacion, total_computadores, total_redes)
+    return mencion_mas_creditos_plan_nuevo(total_software, total_computacion, total_computadores, total_redes)
 
 #devuelve el desglose de los créditos por curso y especialidad
-def mis_creditos(mis_asignaturas, plan_actual):
+def mis_creditos(mis_asignaturas, plan_antiguo):
 
     mis_cursos = [mis_creditos_primero, mis_creditos_segundo, mis_creditos_tercero, mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes]
 
@@ -139,7 +138,7 @@ def mis_creditos(mis_asignaturas, plan_actual):
             casilla = match.group("casilla")
 
             if(casilla_marcada(casilla)):
-                for actual in plan_actual:
+                for actual in plan_antiguo:
                     if "asignatura" in actual:
                         if(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 1 or actual["cuatrimestre"] == 2)):
                             mis_creditos_primero[actual["tipo"]] += actual["creditos"]
@@ -199,7 +198,7 @@ def comprobar_creditos(clasificacion, mi_curso):
         try:
             tipo = comprobar_creditos_curso(clasificacion[contador], anyo)
             if (tipo != 5):
-                raise Exception(f"Los creditos del tipo {tipo_credito[tipo]} en el curso {contador + 1} exceden el valor para el plan actual.")
+                raise Exception(f"Los creditos del tipo {tipo_credito[tipo]} en el curso {contador + 1} exceden el valor para el plan nuevo.")
         
         except Exception as e:
             sinFallos = False
@@ -211,13 +210,13 @@ def comprobar_creditos(clasificacion, mi_curso):
     return sinFallos
 
 if __name__ == "__main__":
-    plan_actual = obtener_plan_actual("plan-actual.json") #aquí se almacenará todo el json del plan actual
-    mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt") #guardamos la información de nuestras asignaturas cursadas
-    clasificacion_actuals = clasificar_creditos_plan_actual(plan_actual)
+    plan_nuevo= obtener_plan_nuevo("plan-nuevo.json") #aquí se almacenará todo el json del plan nuevo
+    mis_asignaturas = obtener_mis_asignaturas_plan_nuevo("mis-asignaturas-convalidadas.txt") #guardamos la información de nuestras asignaturas cursadas
+    clasificacion_antiguos = clasificar_creditos_plan_nuevo(plan_nuevo)
 
-    mi_curso = mis_creditos(mis_asignaturas, plan_actual)
+    mi_curso = mis_creditos(mis_asignaturas, plan_nuevo)
 
-    if(comprobar_creditos(clasificacion_actuals, mi_curso)): 
-        total = creditos_totales_plan_actual()
+    if(comprobar_creditos(clasificacion_antiguos, mi_curso)): 
+        total = creditos_totales_plan_nuevo()
         porcentaje = total["creditos"]/240 * 100
-        print(f"Enhorabuena, tus créditos totales en el plan actual son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.")
+        print(f"Enhorabuena, tus créditos totales en el plan nuevo son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.")
