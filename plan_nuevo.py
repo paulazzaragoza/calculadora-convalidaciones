@@ -5,7 +5,7 @@ import regex as re
 creditos_optativos = 0
 
 #estructura con clave valor para saber el tipo de créditos y el tipo de mención
-tipo_credito = {0:"optativo", 1:"basico", 2:"obligatorio", 3:"tfg"}
+tipo_credito = {0:"optativo", 1:"básico", 2:"obligatorio", 3:"TFG"}
 tipo_mencion = {0:"Software", 1:"Computación", 2:"Computadores", 3:"Tecnologías de la información", 4:"NINGUNA porque no hay créditos de mención", 5:"NINGUNA ya que hay varias menciones con la misma cantidad de créditos"}
 
 #estructuras para guardar el número de creditos cursados por año primero optativas, basicas, obligatorias y tfg
@@ -67,11 +67,11 @@ def comprobar_solo_tfg_plan_nuevo(software, computacion, computadores, redes):
     soloTFG = True
 
     for i in range(3, -1, -1):
-        if(tipo_credito[i] == "tfg" and soloTFG == True):
+        if(tipo_credito[i] == "TFG" and soloTFG == True):
             if(software[i] != 12):
                 soloTFG = False
 
-        elif(tipo_credito[i] != "tfg" and soloTFG == True):
+        elif(tipo_credito[i] != "TFG" and soloTFG == True):
             if(software[i] != 0 or computacion[i] != 0 or computadores[i] != 0 or redes[i] != 0):
                 soloTFG = False
 
@@ -252,11 +252,19 @@ def desglose_creditos_por_cursar():
             if not cursoEscrito and creditos_restantes > 0:
                 cursoEscrito = True
                 str_aux1 = f"\tDesglose de los créditos de {nombre_cursos_dict[contador]}: \n"
-                str_aux2 = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+
+                if(tipo_credito[i] != "TFG"):
+                    str_aux2 = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+                else:
+                    str_aux2 = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}.\n"
+
                 str_res = str_res + str_aux1 + str_aux2
             
             elif cursoEscrito and creditos_restantes > 0:
-                str_aux = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+                if(tipo_credito[i] != "TFG"):
+                    str_aux = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+                else:
+                    str_aux = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}.\n"
                 str_res = str_res + str_aux
 
         contador += 1
