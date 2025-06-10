@@ -136,6 +136,8 @@ def main():
             print(f"{key}-.{optativas_sin_cursar[key]}")
         
         num = input("\nNúmero de la optativa: ")
+        os.system("clear")
+        
         marcar_asignatura(optativas_sin_cursar[int(num)])
         creditos_optativos -= 6
         del asignaturas_sin_covalidacion[0]

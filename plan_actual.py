@@ -2,7 +2,7 @@ import json
 import regex as re
 
 #estructura con clave valor para saber el tipo de créditos y el tipo de mención
-tipo_credito = {0:"optativo", 1:"basico", 2:"obligatorio", 3:"tfg"}
+tipo_credito = {0:"optativo", 1:"basico", 2:"obligatorio", 3:"TFG"}
 tipo_mencion = {0:"Software", 1:"Computación", 2:"Computadores", 3:"Tecnologías de la información", 4:"NINGUNA porque no hay créditos de mención", 5:"NINGUNA ya que hay varias menciones con la misma cantidad de créditos"}
 
 #estructuras para guardar el número de creditos cursados por año primero optativas, basicas, obligatorias y tfg
@@ -57,11 +57,11 @@ def comprobar_solo_tfg_plan_actual(software, computacion, computadores, redes):
     soloTFG = True
 
     for i in range(3, -1, -1):
-        if(tipo_credito[i] == "tfg" and soloTFG == True):
+        if(tipo_credito[i] == "TFG" and soloTFG == True):
             if(software[i] != 12):
                 soloTFG = False
 
-        elif(tipo_credito[i] != "tfg" and soloTFG == True):
+        elif(tipo_credito[i] != "TFG" and soloTFG == True):
             if(software[i] != 0 or computacion[i] != 0 or computadores[i] != 0 or redes[i] != 0):
                 soloTFG = False
 
@@ -214,6 +214,57 @@ def comprobar_creditos(clasificacion, mi_curso):
 
     return sinFallos
 
+#desglose de los créditos que nos faltan por cursar
+def desglose_creditos_por_cursar():
+    primero = [0, 60, 0, 0]
+    segundo = [0, 0, 60, 0]
+    tercero = [6, 0, 54, 0]
+    cuarto = [12, 0, 36, 12]
+
+    mis_creditos_cuarto_total = [0, 0, 0, 0]
+    mis_creditos_curso = [mis_creditos_primero, mis_creditos_segundo, mis_creditos_tercero, mis_creditos_cuarto_total]
+
+    for i in range(0, 4):
+        if(i == 0): 
+            mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i]
+
+        else: mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i] + mis_creditos_cuarto_computacion[i] + mis_creditos_cuarto_computadores[i] + mis_creditos_cuarto_redes[i]
+
+    anyos = [primero, segundo, tercero, cuarto]
+    nombre_cursos_dict = {0: "primero", 1: "segundo", 2: "tercero", 3:"cuarto"}
+    contador = 0
+    str_res = ""
+
+    for curso in anyos:
+        cursoEscrito = False
+        for i in range (0, 4):
+            creditos_restantes = curso[i] - mis_creditos_curso[contador][i]
+
+            if not cursoEscrito and creditos_restantes > 0:
+                cursoEscrito = True
+                str_aux1 = f"\tDesglose de los créditos de {nombre_cursos_dict[contador]}: \n"
+
+                if(tipo_credito[i] != "TFG"):
+                    str_aux2 = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+                else:
+                    str_aux2 = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}.\n"
+
+                str_res = str_res + str_aux1 + str_aux2
+            
+            elif cursoEscrito and creditos_restantes > 0:
+                if(tipo_credito[i] != "TFG"):
+                    str_aux = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}s.\n"
+                else:
+                    str_aux = f"\t\tTe quedan {creditos_restantes} créditos {tipo_credito[i]}.\n"
+                str_res = str_res + str_aux
+
+        contador += 1
+
+        if(cursoEscrito):
+            str_res += '\n'
+
+    return str_res
+
 def resultado_actual():
     plan_actual = obtener_plan_actual("plan-actual.json") #aquí se almacenará todo el json del plan actual
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt") #guardamos la información de nuestras asignaturas cursadas
@@ -225,4 +276,7 @@ def resultado_actual():
     if(comprobar_creditos(clasificacion_actuals, mi_curso)): 
         total = creditos_totales_plan_actual()
         porcentaje = total["creditos"]/240 * 100
-        return f"Plan actual:\n\tEnhorabuena, tus créditos totales en el plan actual son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados."
+        str_1 = f"Plan nuevo:\n\tEnhorabuena, tus créditos totales en el plan nuevo son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.\n\n"
+        str_2 = desglose_creditos_por_cursar()
+
+        return str_1 + str_2
