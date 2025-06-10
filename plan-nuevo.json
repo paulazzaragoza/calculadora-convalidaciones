@@ -28,8 +28,8 @@
     {"asignatura": "Virtualización y computación en la nube", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
     {"asignatura": "Construcción del software II", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
     {"asignatura": "Fundamentos de seguridad", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
-    {"asignatura": "Programación y arquitecturas paralelas", "creditos": 6, "cuatrimestre": 6, "tipo": 0},
-    {"asignatura": "Inteligencia artificial II", "creditos": 6, "cuatrimestre": 6, "tipo": 0},
+    {"asignatura": "Programación y arquitecturas paralelas", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
+    {"asignatura": "Inteligencia artificial II", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
 
     {"asignatura": "Gestión de proyectos", "creditos": 6, "cuatrimestre": 7, "tipo": 2},
     {"asignatura": "Prácticas externas I", "creditos": 6, "cuatrimestre": 7, "tipo": 0},

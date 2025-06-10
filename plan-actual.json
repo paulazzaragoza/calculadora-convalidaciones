@@ -26,6 +26,7 @@
     {"asignatura": "Ampliación de sistemas operativos", "creditos": 6, "cuatrimestre": 5, "tipo": 2},
     {"asignatura": "Arquitectura de redes", "creditos": 6, "cuatrimestre": 5, "tipo": 2},
     {"asignatura": "Arquitectura y organización de computadores", "creditos": 6, "cuatrimestre": 5, "tipo": 2},
+    {"asignatura": "Procesos del desarrollo del software", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
     {"asignatura": "Servicios telemáticos", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
     {"asignatura": "Gestión de proyectos de desarrollo de software", "creditos": 6, "cuatrimestre": 6, "tipo": 2},
     {"asignatura": "Destrezas profesionales de la ingeniería informática", "creditos": 6, "cuatrimestre": 6, "tipo": 2},

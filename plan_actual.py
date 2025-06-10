@@ -23,10 +23,24 @@ def obtener_plan_actual(fichero):
     with open(fichero, "r") as file: 
         return json.load(file)
 
+#devuelve si una casilla está marcada o no
+def casilla_marcada(casilla):
+    isMarcada = False
+    if (casilla[1] == 'X'):
+        isMarcada = True
+
+    return isMarcada
+
 #función para obtener las asignaturas cursadas del fichero
 def obtener_mis_asignaturas_plan_actual(fichero):
+    mis_asignaturas = []
     with open(fichero, "r") as file: 
-        return file.readlines()
+        for linea in file.readlines():
+            if match := compile_mis_asignaturas.match(linea):
+                if(casilla_marcada(match.group("casilla"))):
+                    mis_asignaturas.append(linea)
+
+    return mis_asignaturas
 
 #recorro el plan de estudios y guardo el desglose de creditos de cada curso en una estructura de datos
 def clasificar_creditos_plan_actual(plan_actual):
@@ -37,14 +51,6 @@ def clasificar_creditos_plan_actual(plan_actual):
                 lista.append(dict)
 
     return lista
-
-#devuelve si una casilla está marcada o no
-def casilla_marcada(casilla):
-    isMarcada = False
-    if (casilla[1] == 'X'):
-        isMarcada = True
-
-    return isMarcada
 
 #comprueba si los créditos de las menciones solo incluyen los dedicados al tfg
 def comprobar_solo_tfg_plan_actual(software, computacion, computadores, redes):
@@ -136,39 +142,37 @@ def mis_creditos(mis_asignaturas, plan_actual):
     for linea in mis_asignaturas:
         if match := compile_mis_asignaturas.match(linea):
             asignatura = match.group("asignatura")
-            casilla = match.group("casilla")
 
-            if(casilla_marcada(casilla)):
-                for actual in plan_actual:
-                    if "asignatura" in actual:
-                        if(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 1 or actual["cuatrimestre"] == 2)):
-                            mis_creditos_primero[actual["tipo"]] += actual["creditos"]
+            for actual in plan_actual:
+                if "asignatura" in actual:
+                    if(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 1 or actual["cuatrimestre"] == 2)):
+                        mis_creditos_primero[actual["tipo"]] += actual["creditos"]
 
-                        elif(asignatura == actual["asignatura"]and (actual["cuatrimestre"] == 3 or actual["cuatrimestre"] == 4)):
-                            mis_creditos_segundo[actual["tipo"]] += actual["creditos"]
+                    elif(asignatura == actual["asignatura"]and (actual["cuatrimestre"] == 3 or actual["cuatrimestre"] == 4)):
+                        mis_creditos_segundo[actual["tipo"]] += actual["creditos"]
 
-                        elif(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 5 or actual["cuatrimestre"] == 6)):
-                            mis_creditos_tercero[actual["tipo"]] += actual["creditos"]
+                    elif(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 5 or actual["cuatrimestre"] == 6)):
+                        mis_creditos_tercero[actual["tipo"]] += actual["creditos"]
 
-                        elif(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 7 or actual["cuatrimestre"] == 8)):
-                            if "mencion" in actual:
-                                if actual["mencion"] == "software":
-                                    mis_creditos_cuarto_software[actual["tipo"]] += actual["creditos"]
-                                
-                                elif actual["mencion"] == "computacion":
-                                    mis_creditos_cuarto_computacion[actual["tipo"]] += actual["creditos"]
-                                
-                                elif actual["mencion"] == "computadores":
-                                    mis_creditos_cuarto_computadores[actual["tipo"]] += actual["creditos"]
-
-                                elif actual["mencion"] == "redes":
-                                    mis_creditos_cuarto_redes[actual["tipo"]] += actual["creditos"]
-
-                            elif actual["asignatura"] == "Trabajo fin de grado":
+                    elif(asignatura == actual["asignatura"] and (actual["cuatrimestre"] == 7 or actual["cuatrimestre"] == 8)):
+                        if "mencion" in actual:
+                            if actual["mencion"] == "software":
                                 mis_creditos_cuarto_software[actual["tipo"]] += actual["creditos"]
+                            
+                            elif actual["mencion"] == "computacion":
                                 mis_creditos_cuarto_computacion[actual["tipo"]] += actual["creditos"]
+                            
+                            elif actual["mencion"] == "computadores":
                                 mis_creditos_cuarto_computadores[actual["tipo"]] += actual["creditos"]
+
+                            elif actual["mencion"] == "redes":
                                 mis_creditos_cuarto_redes[actual["tipo"]] += actual["creditos"]
+
+                        elif actual["asignatura"] == "Trabajo fin de grado":
+                            mis_creditos_cuarto_software[actual["tipo"]] += actual["creditos"]
+                            mis_creditos_cuarto_computacion[actual["tipo"]] += actual["creditos"]
+                            mis_creditos_cuarto_computadores[actual["tipo"]] += actual["creditos"]
+                            mis_creditos_cuarto_redes[actual["tipo"]] += actual["creditos"]
     
     return mis_cursos
 
@@ -210,9 +214,10 @@ def comprobar_creditos(clasificacion, mi_curso):
 
     return sinFallos
 
-if __name__ == "__main__":
+def resultado_actual():
     plan_actual = obtener_plan_actual("plan-actual.json") #aquí se almacenará todo el json del plan actual
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt") #guardamos la información de nuestras asignaturas cursadas
+    
     clasificacion_actuals = clasificar_creditos_plan_actual(plan_actual)
 
     mi_curso = mis_creditos(mis_asignaturas, plan_actual)
@@ -220,4 +225,4 @@ if __name__ == "__main__":
     if(comprobar_creditos(clasificacion_actuals, mi_curso)): 
         total = creditos_totales_plan_actual()
         porcentaje = total["creditos"]/240 * 100
-        print(f"Enhorabuena, tus créditos totales en el plan actual son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.")
+        return f"Plan actual:\n\tEnhorabuena, tus créditos totales en el plan actual son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados."
