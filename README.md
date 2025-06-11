@@ -6,14 +6,16 @@ Primero de todo __tenemos que acceder al fichero mis-asignaturas.txt__ que conti
 - Autómatas y lenguajes formales [X] (ejemplo de asignatura marcada porque está aprobada o queremos cursarla).
 - Compiladores [] (ejemplo de asignatura sin marcar).
 
+> ⚠️ **Advertencia:** la __X__ con la que marquemos debe ser en __mayúscula__.
+
 Para usar nuestro programa __debemos estar en la ruta donde se encuentre la descarga del repositorio__. Una vez en la ruta del repositorio debemos ejecutar: 
 ```
 ./convalidaciones
 ```
+
 Si tienes asignaturas que pueden convalidarse por optatitvas te saldrá en pantalla un listado de las opatitiva del plan nuevo indexadas con un número. Para seleccionar que quieres la covalidación con esa optativa, debes teclear dicho número que lo indexa. 
 - 0-.Prácticas externas I (ejemplo de salida por terminal del listado de optativas).
 - Número de la optativa: 0 (ejemplo para marcar que quieres esa optativa convalidada).
-
 
 ¡Listo! __Ya tienes tus resultados en el fichero mis-asignaturas-convalidadas.txt__. Este fichero tiene la misma estructura que el fichero inicial, está separado por cursos y por menciones. Como hemos mencionado antes si encontramos una casilla marcada -> [X] significa que esa asignatura esta aprobada. Si, por el contrario, encontramos que la casilla está vacía -> [] esto significa que la asignatura no está superada y se tendría que cursar. 
 - Estructura y tecnología de computadores [X] (ejemplo de asignatura aprobada con el nuevo plan).
