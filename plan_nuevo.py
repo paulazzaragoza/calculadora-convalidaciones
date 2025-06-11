@@ -83,7 +83,7 @@ def comprobar_no_mencion_plan_nuevo(software, computacion, computadores, redes):
 
     for i in range(0, 4):
         if(sinMencion == True):
-            if(software[i] != 0 and computacion[i] != 0 and computadores[i] != 0 and redes[i] != 0):
+            if(software[i] != 0 or computacion[i] != 0 or computadores[i] != 0 or redes[i] != 0):
                 sinMencion = False
 
     return sinMencion

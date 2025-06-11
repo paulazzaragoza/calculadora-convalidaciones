@@ -73,7 +73,7 @@ def comprobar_no_mencion_plan_actual(software, computacion, computadores, redes)
 
     for i in range(0, 4):
         if(sinMencion == True):
-            if(software[i] != 0 and computacion[i] != 0 and computadores[i] != 0 and redes[i] != 0):
+            if(software[i] != 0 or computacion[i] != 0 or computadores[i] != 0 or redes[i] != 0):
                 sinMencion = False
 
     return sinMencion
@@ -86,7 +86,6 @@ def mencion_mas_creditos_plan_actual(software, computacion, computadores, redes)
     resultado = {"mencion": None, "creditos": 0}
     contador = 0
 
-    
     for creditos_mencion in lista_creditos:
         if(creditos_mencion > resultado["creditos"]):
             resultado["mencion"] = tipo_mencion[contador]
@@ -104,7 +103,7 @@ def mencion_mas_creditos_plan_actual(software, computacion, computadores, redes)
         resultado["mencion"] = tipo_mencion[4]
         resultado["creditos"] = resultado["creditos"] + 12
 
-    if(comprobar_no_mencion_plan_actual):
+    if(comprobar_no_mencion_plan_actual(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)):
         resultado["mencion"] = tipo_mencion[4]
         resultado["creditos"] = resultado["creditos"]
 
@@ -276,7 +275,7 @@ def resultado_actual():
     if(comprobar_creditos(clasificacion_actuals, mi_curso)): 
         total = creditos_totales_plan_actual()
         porcentaje = total["creditos"]/240 * 100
-        str_1 = f"Plan nuevo:\n\tEnhorabuena, tus créditos totales en el plan nuevo son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.\n\n"
+        str_1 = f"Plan actual:\n\tEnhorabuena, tus créditos totales en el plan nuevo son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.\n\n"
         str_2 = desglose_creditos_por_cursar()
 
         return str_1 + str_2
