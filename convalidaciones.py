@@ -126,7 +126,6 @@ def main():
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt")
     obtener_mis_convalidaciones_iniciales(mis_asignaturas, convalidaciones)
     asignaturas_sin_covalidacion = obtener_asignaturas_sin_convalidacion(mis_asignaturas, obtener_claves_convalidaciones(convalidaciones))
-    print(asignaturas_sin_covalidacion)
     creditos_optativos = obtener_optativos_restantes()
     optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
 
@@ -135,13 +134,14 @@ def main():
         for key in  optativas_sin_cursar.keys():
             print(f"{key}-.{optativas_sin_cursar[key]}")
         
-        num = input("\nNúmero de la optativa: ")
+        num = int(input("\nNúmero de la optativa: "))
         os.system("clear")
         
-        marcar_asignatura(optativas_sin_cursar[int(num)])
-        creditos_optativos -= 6
-        del asignaturas_sin_covalidacion[0]
-        optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
+        if(num > -1 and num < len(optativas_sin_cursar)):
+            marcar_asignatura(optativas_sin_cursar[num])
+            creditos_optativos -= 6
+            del asignaturas_sin_covalidacion[0]
+            optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
 
     os.remove(".archivo-auxiliar.txt")
     os.system("clear")
