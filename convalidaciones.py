@@ -121,7 +121,7 @@ def asignaturas_optativas_sin_seleccionar_plan_nuevo():
 def main():
 
 
-    convalidaciones = obtener_convalidaciones("convalidaciones.json")
+    convalidaciones = obtener_convalidaciones(".convalidaciones.json")
 
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt")
     obtener_mis_convalidaciones_iniciales(mis_asignaturas, convalidaciones)

@@ -2,7 +2,7 @@ import json
 import regex as re
 
 #estructura con clave valor para saber el tipo de créditos y el tipo de mención
-tipo_credito = {0:"optativo", 1:"basico", 2:"obligatorio", 3:"TFG"}
+tipo_credito = {0:"optativo", 1:"básico", 2:"obligatorio", 3:"TFG"}
 tipo_mencion = {0:"Software", 1:"Computación", 2:"Computadores", 3:"Tecnologías de la información", 4:"NINGUNA porque no hay créditos de mención", 5:"NINGUNA ya que hay varias menciones con la misma cantidad de créditos"}
 
 #estructuras para guardar el número de creditos cursados por año primero optativas, basicas, obligatorias y tfg
@@ -266,7 +266,7 @@ def desglose_creditos_por_cursar():
     return str_res
 
 def resultado_actual():
-    plan_actual = obtener_plan_actual("plan-actual.json") #aquí se almacenará todo el json del plan actual
+    plan_actual = obtener_plan_actual(".plan-actual.json") #aquí se almacenará todo el json del plan actual
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt") #guardamos la información de nuestras asignaturas cursadas
     
     clasificacion_actuals = clasificar_creditos_plan_actual(plan_actual)

@@ -275,7 +275,7 @@ def desglose_creditos_por_cursar():
     return str_res
 
 def resultado_nuevo():
-    plan_nuevo= obtener_plan_nuevo("plan-nuevo.json") #aquí se almacenará todo el json del plan nuevo
+    plan_nuevo= obtener_plan_nuevo(".plan-nuevo.json") #aquí se almacenará todo el json del plan nuevo
     mis_asignaturas = obtener_mis_asignaturas_plan_nuevo("mis-asignaturas-convalidadas.txt") #guardamos la información de nuestras asignaturas cursadas
     clasificacion_antiguos = clasificar_creditos_plan_nuevo(plan_nuevo)
 
