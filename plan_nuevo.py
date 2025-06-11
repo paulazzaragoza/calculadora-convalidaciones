@@ -168,7 +168,7 @@ def mis_creditos(mis_asignaturas, plan_nuevo):
                             if actual["mencion"] == "software":
                                 mis_creditos_cuarto_software[actual["tipo"]] += actual["creditos"]
                             
-                            elif actual["mencion"] == "computacion":
+                            elif actual["mencion"] == "computación":
                                 mis_creditos_cuarto_computacion[actual["tipo"]] += actual["creditos"]
                             
                             elif actual["mencion"] == "computadores":
