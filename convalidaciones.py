@@ -118,9 +118,16 @@ def asignaturas_optativas_sin_seleccionar_plan_nuevo():
 
     return sin_cursar
 
+#sobreescribe un fichero por el contenido de otro
+def sobreescribir_fichero(origen, destino):
+    contenido = None
+    with open(origen, "r") as file:
+        contenido = file.read()
+
+    with open(destino, "w") as file:
+        file.write(contenido)
+
 def main():
-
-
     convalidaciones = obtener_convalidaciones(".convalidaciones.json")
 
     mis_asignaturas = obtener_mis_asignaturas_plan_actual("mis-asignaturas.txt")
@@ -142,6 +149,8 @@ def main():
             creditos_optativos -= 6
             del asignaturas_sin_covalidacion[0]
             optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
+
+        sobreescribir_fichero("mis-asignaturas-convalidadas.txt", ".archivo-auxiliar.txt")
 
     os.remove(".archivo-auxiliar.txt")
     os.system("clear")

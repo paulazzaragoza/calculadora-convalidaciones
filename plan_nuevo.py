@@ -232,6 +232,10 @@ def desglose_creditos_por_cursar(mencion):
     mis_creditos_cuarto_total = [0, 0, 0, 0]
     mis_creditos_curso = [mis_creditos_primero, mis_creditos_segundo, mis_creditos_tercero, mis_creditos_cuarto_total]
 
+    se_cursa_comun = False
+    if(mis_creditos_cuarto_software[2] >= 6):
+        se_cursa_comun = True
+
     indice_mencion = {"Software":0, "Computación":1, "Computadores":2, "Tecnologías de la información":3, "NINGUNA porque no hay créditos de mención":4, "NINGUNA ya que hay varias menciones con la misma cantidad de créditos":5}
     lista_creditos_mencion = [mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes]
     for i in range(0, 4):
@@ -243,6 +247,9 @@ def desglose_creditos_por_cursar(mencion):
 
         else:
             mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i] + mis_creditos_cuarto_computacion[i] + mis_creditos_cuarto_computadores[i] + mis_creditos_cuarto_redes[i]
+
+    if(se_cursa_comun == True and indice_mencion[mencion] > 4):
+        mis_creditos_cuarto_total[2] -= 18 
 
     anyos = [primero, segundo, tercero, cuarto]
     nombre_cursos_dict = {0: "primero", 1: "segundo", 2: "tercero", 3:"cuarto"}
