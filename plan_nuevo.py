@@ -95,7 +95,7 @@ def mencion_mas_creditos_plan_nuevo(software, computacion, computadores, redes):
     soloTFG = comprobar_solo_tfg_plan_nuevo(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)
     resultado = {"mencion": None, "creditos": 0}
     contador = 0
-    
+
     for creditos_mencion in lista_creditos:
         if(creditos_mencion > resultado["creditos"]):
             resultado["mencion"] = tipo_mencion[contador]
@@ -113,9 +113,8 @@ def mencion_mas_creditos_plan_nuevo(software, computacion, computadores, redes):
         resultado["mencion"] = tipo_mencion[4]
         resultado["creditos"] = resultado["creditos"] + 12
 
-    if(comprobar_no_mencion_plan_nuevo(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)):
+    elif(comprobar_no_mencion_plan_nuevo(mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes)):
         resultado["mencion"] = tipo_mencion[4]
-        resultado["creditos"] = resultado["creditos"]
 
     elif(hayVarias):
         resultado["mencion"] = tipo_mencion[5]
@@ -224,7 +223,7 @@ def comprobar_creditos(clasificacion, mi_curso):
     return sinFallos
 
 #desglose de los créditos que nos faltan por cursar
-def desglose_creditos_por_cursar():
+def desglose_creditos_por_cursar(mencion):
     primero = [0, 54, 6, 0]
     segundo = [0, 6, 54, 0]
     tercero = [0, 0, 60, 0]
@@ -233,11 +232,17 @@ def desglose_creditos_por_cursar():
     mis_creditos_cuarto_total = [0, 0, 0, 0]
     mis_creditos_curso = [mis_creditos_primero, mis_creditos_segundo, mis_creditos_tercero, mis_creditos_cuarto_total]
 
+    indice_mencion = {"Software":0, "Computación":1, "Computadores":2, "Tecnologías de la información":3, "NINGUNA porque no hay créditos de mención":4, "NINGUNA ya que hay varias menciones con la misma cantidad de créditos":5}
+    lista_creditos_mencion = [mis_creditos_cuarto_software, mis_creditos_cuarto_computacion, mis_creditos_cuarto_computadores, mis_creditos_cuarto_redes]
     for i in range(0, 4):
         if(i == 0): 
             mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i]
 
-        else: mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i] + mis_creditos_cuarto_computacion[i] + mis_creditos_cuarto_computadores[i] + mis_creditos_cuarto_redes[i]
+        elif indice_mencion[mencion] < 4: 
+            mis_creditos_cuarto_total[i] = lista_creditos_mencion[indice_mencion[mencion]][i]
+
+        else:
+            mis_creditos_cuarto_total[i] = mis_creditos_cuarto_software[i] + mis_creditos_cuarto_computacion[i] + mis_creditos_cuarto_computadores[i] + mis_creditos_cuarto_redes[i]
 
     anyos = [primero, segundo, tercero, cuarto]
     nombre_cursos_dict = {0: "primero", 1: "segundo", 2: "tercero", 3:"cuarto"}
@@ -285,6 +290,6 @@ def resultado_nuevo():
         total = creditos_totales_plan_nuevo()
         porcentaje = total["creditos"]/240 * 100
         str_1 = f"Plan nuevo:\n\tEnhorabuena, tus créditos totales en el plan nuevo son: {total['creditos']} y te especializarías en la mención de {total['mencion']}. Esto supone el {porcentaje}% de créditos superados.\n\n"
-        str_2 = desglose_creditos_por_cursar()
+        str_2 = desglose_creditos_por_cursar(total['mencion'])
 
         return str_1 + str_2
