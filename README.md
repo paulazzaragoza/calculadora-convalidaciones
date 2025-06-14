@@ -12,6 +12,10 @@ Para usar nuestro programa __debemos estar en la ruta donde se encuentre la desc
 ```
 ./convalidaciones
 ```
+o
+```
+python3 convalidaciones.py
+```
 
 Si tienes asignaturas que pueden convalidarse por optatitvas te saldrá en pantalla un listado de las opatitiva del plan nuevo indexadas con un número. Para seleccionar que quieres la covalidación con esa optativa, debes teclear dicho número que lo indexa. 
 - 0-.Prácticas externas I (ejemplo de salida por terminal del listado de optativas).

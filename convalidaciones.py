@@ -136,6 +136,8 @@ def main():
     creditos_optativos = obtener_optativos_restantes()
     optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
 
+    sobreescribir_fichero(".archivo-auxiliar.txt", "mis-asignaturas-convalidadas.txt")
+    
     while(creditos_optativos != 0 and len(asignaturas_sin_covalidacion) > 0):
         print(f"Tienes {len(asignaturas_sin_covalidacion)} asignaturas que puedes convalidar por optativas. Escribe su número.")
         for key in  optativas_sin_cursar.keys():
@@ -149,9 +151,8 @@ def main():
             creditos_optativos -= 6
             del asignaturas_sin_covalidacion[0]
             optativas_sin_cursar = asignaturas_optativas_sin_seleccionar_plan_nuevo()
-
-        sobreescribir_fichero("mis-asignaturas-convalidadas.txt", ".archivo-auxiliar.txt")
-
+            sobreescribir_fichero("mis-asignaturas-convalidadas.txt", ".archivo-auxiliar.txt")
+        
     os.remove(".archivo-auxiliar.txt")
     os.system("clear")
 
