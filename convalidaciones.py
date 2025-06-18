@@ -57,8 +57,8 @@ def obtener_mis_convalidaciones_iniciales(mis_asignaturas, convalidaciones):
         
         mis_convalidaciones.append(obtener_convalidacion(asignatura_nombre_actual, convalidaciones))
     
-        #if(asignatura_nombre_actual == "Álgebra y matemática discreta"): 
-            #mis_convalidaciones.append("Matemática discreta")
+        if(asignatura_nombre_actual == "Álgebra y matemática discreta"): 
+            mis_convalidaciones.append("Matemática discreta")
 
     with open(".archivo-auxiliar.txt", "w") as example:
         with open(".plantilla-plan-nuevo.txt", "r") as file:
